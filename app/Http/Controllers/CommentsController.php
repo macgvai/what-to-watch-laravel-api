@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PosterFetcher;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class ShowController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,20 +19,19 @@ class ShowController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Получить все данные из body
+        $allData = $request->all();
+
+        return 'Добавляет новый комментарий к фильму с идентификатором filmId.' . $id;
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param Show $show
-     * @return Success
      */
-    public function show(PosterFetcher $fetcher)
+    public function show(string $id)
     {
-        $name = $fetcher->getPoster($show->title);
-
-        return $this->success($show);
+        return 'Возвращает список комментариев для фильма с идентификатором filmId.:' . $id;
     }
 
     /**
