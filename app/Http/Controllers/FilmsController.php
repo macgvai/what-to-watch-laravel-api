@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Responses\Success;
 use Illuminate\Http\Request;
 
 class FilmsController extends Controller
@@ -11,7 +12,10 @@ class FilmsController extends Controller
      */
     public function index()
     {
-        return 'films index';
+        $data = [
+            ['index' => 'index']
+        ];
+        return $this->success($data, 201);
     }
 
     /**
