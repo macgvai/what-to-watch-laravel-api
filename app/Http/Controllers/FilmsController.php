@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Responses\Success;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FilmsController extends Controller

@@ -25,7 +25,7 @@ Route::post('/favorite/{filmId}/{status}', [FavoriteController::class, 'update']
 Route::get('/comments/{filmId}', [CommentsController::class, 'show'])->name('comments.show');
 Route::post('/comments/{filmId}', [CommentsController::class, 'store'])->name('comments.store');
 
-// Userhtm
+// User
 Route::get('/login', [UserController::class, 'index'])->name('login.index');
 Route::post('/login', [UserController::class, 'login'])->name('login.login');
 
