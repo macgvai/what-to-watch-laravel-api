@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('comment');
             $table->dateTime('date');
-            $table->integer('rating'); // rating: number
+            $table->integer('rating');
             $table->integer('user_id');
             $table->timestamps();
         });
