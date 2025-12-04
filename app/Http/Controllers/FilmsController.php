@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Responses\Success;
+use App\Models\Film;
 use App\Models\User;
+use App\Services\FilmService;
 use Illuminate\Http\Request;
 
 class FilmsController extends Controller
@@ -11,12 +13,11 @@ class FilmsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FilmService $filmService): Success
     {
-        $data = [
-            ['index' => 'index']
-        ];
-        return $this->success($data, 201);
+        $films = $filmService->getFilms();
+
+        return $this->success($films, 201);
     }
 
     /**

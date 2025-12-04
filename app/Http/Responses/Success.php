@@ -11,8 +11,11 @@ class Success extends Base
      */
     protected function makeResponseData(): ?array
     {
+        $preparedData = $this->prepareData();
+
         return $this->data ? [
-            'data' => $this->prepareData(),
+            'data' => $preparedData,
+            'count' => is_countable($preparedData) ? count($preparedData) : 0,
         ] : null;
     }
 }
