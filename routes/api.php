@@ -9,10 +9,14 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::prefix('user')->name('user.')->middleware('auth:sanctum')->group(function () {
+
+});
+
 Route::get('/test', [ShowController::class, 'show']);
+Route::get( '/films', [FilmsController::class, 'index'])->name('films.index');
 
 // Films
-Route::get('/films', [FilmsController::class, 'index'])->name('films.index');
 Route::get('/films/{filmId}', [FilmsController::class, 'show'])->name('films.show');
 Route::get('/films/{filmId}/similar', [FilmsController::class, 'showSimilar'])->name('films.similar');
 Route::get('promo', [FilmsController::class, 'promo'])->name('films.promo');
