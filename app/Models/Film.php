@@ -22,7 +22,16 @@ class Film extends Model
         'run_time',
         'genre',
         'released',
-        'is_favorite'
+        'is_favorite',
+    ];
+
+    protected $casts = [
+        'starring' => 'json',       // автоматически преобразует массив ⇄ JSON
+        'is_favorite' => 'boolean',
+        'released' => 'integer',
+        'run_time' => 'integer',
+        'rating' => 'float',
+        'scores_count' => 'integer',
     ];
 
     public function genres(): BelongsToMany {

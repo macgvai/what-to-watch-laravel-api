@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('background_color');
             $table->string('video_link');
             $table->string('preview_video_link');
-            $table->integer('rating');
+            $table->decimal('rating');
             $table->integer('scores_count');
             $table->string('director');
             $table->string('starring');

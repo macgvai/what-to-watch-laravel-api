@@ -10,6 +10,7 @@ export default Main;
 function Main(props) {
   const films = props.films;
   const {name, genre, year} = props;
+  debugger
   return (
     <React.Fragment>
       <div className="visually-hidden">

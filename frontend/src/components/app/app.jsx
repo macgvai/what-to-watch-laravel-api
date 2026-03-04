@@ -21,7 +21,7 @@ function App(props) {
     const adaptToClient = (film) => ({
         id: film.id,
         name: film.name,
-        poster_image: 'http://localhost:3000/img/war-of-the-worlds.jpg',
+        posterImage: film.preview_image,
         previewImage: film.preview_image,
         backgroundImage: film.background_image,
         backgroundColor: film.background_color,
