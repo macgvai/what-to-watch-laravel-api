@@ -1,28 +1,49 @@
 import React from 'react';
 import { useRef } from 'react';
 
-export default SignIn;
+export default Registration;
 
-function SignIn() {
-    const handleSignIn = (e) => {
+function Registration() {
+    const handleSignIn = async (e) => {
         e.preventDefault();
 
-        const form = e.target;
-        const formData = new FormData(form);
+        const formData = new FormData(e.currentTarget);
 
-        const email = formData.get('user-email');
-        const password = formData.get('user-password');
+        const payload = {
+            name: formData.get('user-name')?.trim(),
+            email: formData.get('user-email')?.trim(),
+            password: formData.get('user-password'),
+        };
 
-        console.log({ email, password });
-        fetch('http://127.0.0.1:8000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
-            .then((response) => {})
-            .then((response) => console.log(response));
+        try {
+            const response = await fetch(
+                'http://127.0.0.1:8000/api/registration',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                },
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                console.error('Ошибка регистрации:', data);
+                return;
+            }
+
+            console.log('Успешная регистрация:', data);
+
+            localStorage.setItem('token', data.token);
+
+            // можно очистить форму
+            e.currentTarget.reset();
+        } catch (error) {
+            console.error('Сетевая ошибка:', error);
+        }
     };
 
   return (
@@ -69,6 +90,10 @@ function SignIn() {
           <form action="#" className="sign-in__form" onSubmit={handleSignIn}>
             <div className="sign-in__fields">
               <div className="sign-in__field">
+                <input className="sign-in__input" type="name" placeholder="Name" name="user-name" id="user-name" />
+                <label className="sign-in__label visually-hidden" htmlFor="user-name">Name</label>
+              </div>
+                <div className="sign-in__field">
                 <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>

@@ -9,7 +9,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', [ShowController::class, 'show']);
-Route::get( '/films', [FilmsController::class, 'index'])->name('films.index');
+
+Route::get( '/films', [FilmsController::class, 'index'])->name('films.index')->middleware('auth:sanctum');
 
 // Films
 Route::get('/films/{filmId}', [FilmsController::class, 'show'])->name('films.show');
@@ -28,7 +29,7 @@ Route::post('/comments/{filmId}', [CommentsController::class, 'store'])->name('c
 Route::get('/login', [UserController::class, 'index'])->name('login.index');
 Route::post('/login', [UserController::class, 'login'])->name('login.login');
 
-Route::get('/register', [UserController::class, 'register'])->name('register.index');
+Route::post('/registration', [UserController::class, 'register'])->name('register.index');
 
 
 require __DIR__.'/settings.php';

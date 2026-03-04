@@ -42,7 +42,17 @@ function App(props) {
     useEffect(() => {
         async function fetchFilms() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/films');
+                const token = localStorage.getItem('token');
+                const response = await fetch(
+                    'http://127.0.0.1:8000/api/films',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json',
+                            authorization: `Bearer ${token}`,
+                        },
+                    },
+                );
                 if (!response.ok) {
                     throw new Error(`Ошибка загрузки фильмов: ${response.status}`);
                 }
@@ -71,53 +81,57 @@ function App(props) {
 
   const {reviews, name, genre, year} = props;
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact >
-          <Main films={films} name={name} genre={genre} year={year} />
-        </Route>
-        <Route path="/login" exact component={SignIn} />
-        <Route path="/mylist" exact >
-          <MyList films={films} />
-        </Route>
-        <Route
-          exact path={`${AppRoute.FILM}/:id`}
-          render={(data) => (
-            <Film
-              film={getFilm(films, data.match.params.id)}
-              films={films}
-              reviews={reviews}
-            />)}
-        />
-        <Route
-          exact path={`${AppRoute.FILM}/:id/review`}
-          render={(data) => (
-            <Review
-              review={getReviews(reviews, data.match.params.id)}
-            />)}
-        />
-        <Route
-          exact path={`${AppRoute.PLAYER}/:id`}
-          render={(data) => (
-            <Player
-              film={getFilm(films, data.match.params.id)}
-            />
-          )}
-        />
-        <Route
-          render={() => (
-            <Fragment>
-              <h1>
-                404.
-                <br />
-                <small>Page not found</small>
-              </h1>
-              <Link to="/">Go to main page</Link>
-            </Fragment>
-          )}
-        />
-      </Switch>
-    </BrowserRouter>
+      <BrowserRouter>
+          <Switch>
+              <Route path="/" exact>
+                  <Main films={films} name={name} genre={genre} year={year} />
+              </Route>
+              <Route path="/login" exact component={SignIn} />
+              <Route path="/registration" exact component={Registration} />
+              <Route path="/mylist" exact>
+                  <MyList films={films} />
+              </Route>
+              <Route
+                  exact
+                  path={`${AppRoute.FILM}/:id`}
+                  render={(data) => (
+                      <Film
+                          film={getFilm(films, data.match.params.id)}
+                          films={films}
+                          reviews={reviews}
+                      />
+                  )}
+              />
+              <Route
+                  exact
+                  path={`${AppRoute.FILM}/:id/review`}
+                  render={(data) => (
+                      <Review
+                          review={getReviews(reviews, data.match.params.id)}
+                      />
+                  )}
+              />
+              <Route
+                  exact
+                  path={`${AppRoute.PLAYER}/:id`}
+                  render={(data) => (
+                      <Player film={getFilm(films, data.match.params.id)} />
+                  )}
+              />
+              <Route
+                  render={() => (
+                      <Fragment>
+                          <h1>
+                              404.
+                              <br />
+                              <small>Page not found</small>
+                          </h1>
+                          <Link to="/">Go to main page</Link>
+                      </Fragment>
+                  )}
+              />
+          </Switch>
+      </BrowserRouter>
   );
 }
 
