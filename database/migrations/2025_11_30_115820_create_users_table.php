@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar_url');
+            $table->string('avatar_url')->default('https://cdn.discordapp.com/embed/avatars/0.png');
             $table->string('email');
             $table->string('name');
-            $table->string('token');
+            $table->string('password');
             $table->timestamps();
         });
     }

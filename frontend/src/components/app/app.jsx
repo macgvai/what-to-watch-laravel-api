@@ -11,6 +11,7 @@ import Player from '../pages/player/player';
 import filmProp from '../ui/card/card.prop';
 import reviewProp from '../ui/review/review.prop';
 import {getFilm, getReviews} from '../../utils/utils';
+import Registration from '../pages/registration/registration';
 
 
 function App(props) {
@@ -41,6 +42,7 @@ function App(props) {
 
     useEffect(() => {
         async function fetchFilms() {
+            console.log('fetchFilms');
             try {
                 const token = localStorage.getItem('token');
                 const response = await fetch(
@@ -76,7 +78,7 @@ function App(props) {
     }
 
     if (error) {
-        return <div>Ошибка: {error}</div>;
+        console.error(error);
     }
 
   const {reviews, name, genre, year} = props;

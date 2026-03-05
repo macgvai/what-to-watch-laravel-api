@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use http\Message\Body;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -64,15 +62,15 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function logout(Request $request)
-    {
-        $user = $request->user();
-
-        // Отзываем текущий токен
-        $user->currentAccessToken()->delete();
-
-        return response()->json([
-            'message' => 'Токен отозван'
-        ]);
-    }
+//    public function logout(Request $request)
+//    {
+//        $user = $request->user();
+//
+//        // Отзываем текущий токен
+//        $user->currentAccessToken()->delete();
+//
+//        return response()->json([
+//            'message' => 'Токен отозван'
+//        ]);
+//    }
 }

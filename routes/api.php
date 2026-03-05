@@ -26,8 +26,8 @@ Route::get('/comments/{filmId}', [CommentsController::class, 'show'])->name('com
 Route::post('/comments/{filmId}', [CommentsController::class, 'store'])->name('comments.store');
 
 // User
-Route::get('/login', [UserController::class, 'index'])->name('login.index');
-Route::post('/login', [UserController::class, 'login'])->name('login.login');
+//Route::get('/login', [UserController::class, 'index'])->name('login.index');
+Route::post('/login', [UserController::class, 'login'])->name('user.login');
 
 Route::post('/registration', [UserController::class, 'register'])->name('register.index');
 

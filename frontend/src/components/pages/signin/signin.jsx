@@ -1,10 +1,11 @@
 import React from 'react';
 import { useRef } from 'react';
+import { AppRoute } from '../../../const';
 
 export default SignIn;
 
 function SignIn() {
-    const handleSignIn = (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
 
         const form = e.target;
@@ -13,16 +14,44 @@ function SignIn() {
         const email = formData.get('user-email');
         const password = formData.get('user-password');
 
-        console.log({ email, password });
-        fetch('http://127.0.0.1:8000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
-            .then((response) => {})
-            .then((response) => console.log(response));
+        // Валидация: проверка ввода
+        if (!email || !password) {
+            console.error('Email и пароль обязательны');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(
+                    errorData.message || `Ошибка входа: ${response.status}`,
+                );
+            }
+
+            const data = await response.json();
+
+            // Сохраняем данные аутентификации
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
+            // Перенаправление на главную
+            window.location.href = '/';
+        } catch (error) {
+            console.error('Ошибка при входе:', error.message);
+            // Можно показать пользователю сообщение об ошибке
+            alert(
+                error.message || 'Не удалось войти. Проверьте логин и пароль.',
+            );
+        }
     };
 
   return (
