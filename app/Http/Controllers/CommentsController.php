@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CommentsController extends Controller
 {
@@ -45,8 +47,13 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
-        //
-    }
+        // Использование Gate
+        if (Gate::allows('delete-comment', $comment)) {
+            $comment->delete();
+            return response()->json(['message' => 'Comment deleted successfully']);
+        }
+
+        abort(403, 'Unauthorized');    }
 }
